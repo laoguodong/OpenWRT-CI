@@ -205,8 +205,6 @@ CONFIG_PACKAGE_luci-app-frpc=y
 #CPU频率 / WOLPlus / ModemData / NSS ECM / TurboACC
 CONFIG_PACKAGE_cpufreq=y
 CONFIG_PACKAGE_luci-app-wolplus=y
-CONFIG_PACKAGE_luci-app-modemdata=y
-CONFIG_PACKAGE_modemdata=y
 CONFIG_PACKAGE_sms-tool=y
 CONFIG_PACKAGE_comgt=y
 CONFIG_PACKAGE_luci-app-turboacc=y
@@ -229,3 +227,17 @@ CONFIG_PACKAGE_kmod-qca-nss-drv-netlink=y
 CONFIG_PACKAGE_kmod-qca-nss-drv-pptp=y
 CONFIG_PACKAGE_kmod-qca-nss-drv-l2tpv2=y
 CONFIG_NSS_FIRMWARE_VERSION_12_5=y
+
+#依赖修复：Dockerman 库与 Docker/LXC 用户映射
+CONFIG_PACKAGE_luci-lib-docker=y
+CONFIG_PACKAGE_shadow-newuidmap=y
+CONFIG_PACKAGE_shadow-newgidmap=y
+CONFIG_PACKAGE_shadow-subuid=y
+CONFIG_PACKAGE_shadow-subgid=y
+
+#依赖缺失规避：先移除会导致 warning/失败的包
+CONFIG_PACKAGE_luci-app-modemdata=n
+CONFIG_PACKAGE_modemdata=n
+CONFIG_PACKAGE_luci-app-netspeedtest=n
+CONFIG_PACKAGE_qmodem=n
+CONFIG_PACKAGE_luci-app-qmodem=n

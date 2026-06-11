@@ -55,10 +55,11 @@ UPDATE_PACKAGE "aurora-config" "eamonxg/luci-app-aurora-config" "master"
 # iStore 软件中心
 UPDATE_PACKAGE "istore" "linkease/istore" "main"
 UPDATE_PACKAGE "dockerman" "lisaac/luci-app-dockerman" "master"
+UPDATE_PACKAGE "luci-lib-docker" "kenzok8/small-package" "main" "pkg"
 
 # TurboACC / ModemData
 UPDATE_PACKAGE "turboacc" "chenmozhijin/turboacc" "main"
-UPDATE_PACKAGE "luci-app-modemdata" "4IceG/luci-app-modemdata" "main"
+#UPDATE_PACKAGE "luci-app-modemdata" "4IceG/luci-app-modemdata" "main"
 
 # FRP 内网穿透
 UPDATE_PACKAGE "frp" "kuoruan/openwrt-frp" "master"
@@ -81,12 +82,12 @@ UPDATE_PACKAGE "diskman" "sbwml/luci-app-diskman" "main"
 UPDATE_PACKAGE "diskmanager" "4IceG/luci-app-mini-diskmanager" "main"
 #UPDATE_PACKAGE "easytier" "EasyTier/luci-app-easytier" "main"
 UPDATE_PACKAGE "mosdns" "sbwml/luci-app-mosdns" "v5" "" "v2dat"
-UPDATE_PACKAGE "netspeedtest" "sirpdboy/netspeedtest" "main" "" "homebox ookla-speedtest"
+#UPDATE_PACKAGE "netspeedtest" "sirpdboy/netspeedtest" "main" "" "homebox ookla-speedtest"
 UPDATE_PACKAGE "netwizard" "sirpdboy/luci-app-netwizard" "main"
 UPDATE_PACKAGE "openlist2" "sbwml/luci-app-openlist2" "main"
 UPDATE_PACKAGE "partexp" "sirpdboy/luci-app-partexp" "main"
 #UPDATE_PACKAGE "qbittorrent" "sbwml/luci-app-qbittorrent" "master" "" "qt6base qt6tools rblibtorrent"
-UPDATE_PACKAGE "qmodem" "FUjr/QModem" "main"
+#UPDATE_PACKAGE "qmodem" "FUjr/QModem" "main"
 UPDATE_PACKAGE "quickfile" "sbwml/luci-app-quickfile" "main"
 UPDATE_PACKAGE "timecontrol" "sirpdboy/luci-app-timecontrol" "main"
 UPDATE_PACKAGE "viking" "VIKINGYFY/packages" "main" "" "gecoosac luci-app-timewol luci-app-wolplus"
