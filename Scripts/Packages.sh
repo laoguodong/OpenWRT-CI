@@ -55,6 +55,10 @@ UPDATE_PACKAGE "aurora-config" "eamonxg/luci-app-aurora-config" "master"
 # iStore 软件中心
 UPDATE_PACKAGE "istore" "linkease/istore" "main"
 UPDATE_PACKAGE "dockerman" "lisaac/luci-app-dockerman" "master"
+
+# FRP 内网穿透
+UPDATE_PACKAGE "frp" "kuoruan/openwrt-frp" "master"
+UPDATE_PACKAGE "luci-app-frpc" "kuoruan/luci-app-frpc" "master"
 UPDATE_PACKAGE "kucat" "sirpdboy/luci-theme-kucat" "master"
 UPDATE_PACKAGE "kucat-config" "sirpdboy/luci-app-kucat-config" "master"
 
