@@ -64,6 +64,13 @@ if [ -n "$ISTORE_STORE_MAKEFILE" ]; then
 fi
 UPDATE_PACKAGE "dockerman" "lisaac/luci-app-dockerman" "master"
 UPDATE_PACKAGE "luci-lib-docker" "kenzok8/small-package" "main" "pkg"
+# Dockerman upstream uses PKG_VERSION with a leading "v"; APK rejects version "v0.5.26-r1".
+DOCKERMAN_MAKEFILE=$(find . -path '*/luci-app-dockerman/Makefile' -print -quit)
+if [ -n "$DOCKERMAN_MAKEFILE" ]; then
+  sed -i "s/^PKG_VERSION:=v/PACKAGE_VERSION_SHOULD_NOT_MATCH:=v/" "$DOCKERMAN_MAKEFILE"
+  sed -i "s/^PACKAGE_VERSION_SHOULD_NOT_MATCH:=v/PKG_VERSION:=/" "$DOCKERMAN_MAKEFILE"
+  grep -E '^(PKG_VERSION|PKG_RELEASE):=' "$DOCKERMAN_MAKEFILE"
+fi
 
 # TurboACC / ModemData
 UPDATE_PACKAGE "turboacc" "chenmozhijin/turboacc" "main"
