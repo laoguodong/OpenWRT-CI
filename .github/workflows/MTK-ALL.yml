@@ -6,11 +6,7 @@ name: MTK-ALL
 
 #CI计划
 on:
-  #自动编译：当Auto-Clean运行完成后
-  workflow_run:
-    workflows: ["Auto-Clean"]
-    types:
-      - completed
+  #自动编译已关闭：NN6000 只保留 QCA-ALL 每日构建
   #手动编译
   workflow_dispatch:
     inputs:
