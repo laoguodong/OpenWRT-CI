@@ -54,6 +54,11 @@ UPDATE_PACKAGE "aurora-config" "eamonxg/luci-app-aurora-config" "master"
 
 # iStore 软件中心
 UPDATE_PACKAGE "istore" "linkease/istore" "main"
+# iStore upstream uses PKG_VERSION=0.1.32-1 with empty PKG_RELEASE; APK rejects hyphenated version.
+# Normalize to PKG_VERSION=0.1.32 + PKG_RELEASE=1 for current ImmortalWrt apk packaging.
+if [ -f package/istore/luci/luci-app-store/Makefile ]; then
+  sed -i "s/^PKG_VERSION:=0\.1\.32-1/PKG_VERSION:=0.1.32/; s/^PKG_RELEASE:=.*/PKG_RELEASE:=1/" package/istore/luci/luci-app-store/Makefile
+fi
 UPDATE_PACKAGE "dockerman" "lisaac/luci-app-dockerman" "master"
 UPDATE_PACKAGE "luci-lib-docker" "kenzok8/small-package" "main" "pkg"
 
