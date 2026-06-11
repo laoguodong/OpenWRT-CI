@@ -56,6 +56,10 @@ UPDATE_PACKAGE "aurora-config" "eamonxg/luci-app-aurora-config" "master"
 UPDATE_PACKAGE "istore" "linkease/istore" "main"
 UPDATE_PACKAGE "dockerman" "lisaac/luci-app-dockerman" "master"
 
+# TurboACC / ModemData
+UPDATE_PACKAGE "turboacc" "chenmozhijin/turboacc" "main"
+UPDATE_PACKAGE "luci-app-modemdata" "4IceG/luci-app-modemdata" "main"
+
 # FRP 内网穿透
 UPDATE_PACKAGE "frp" "kuoruan/openwrt-frp" "master"
 UPDATE_PACKAGE "luci-app-frpc" "kuoruan/luci-app-frpc" "master"
