@@ -104,6 +104,15 @@ UPDATE_PACKAGE "partexp" "sirpdboy/luci-app-partexp" "main"
 
 # 对齐旧路由常用管理插件
 UPDATE_PACKAGE "cpulimit-ng" "gangbanlau/cpulimit-ng" "master"
+# cpulimit-ng upstream unconditionally includes <sys/sysctl.h>; musl/ImmortalWrt may not provide it.
+# The sysctl call is only used in the macOS code path, so guard/remove it for Linux builds.
+CPULIMIT_NG_C=$(find ./cpulimit-ng -type f -name 'cpulimit.c' -print -quit)
+if [ -n "$CPULIMIT_NG_C" ]; then
+  sed -i 's|^#include <sys/sysctl.h>|#ifdef __APPLE__
+#include <sys/sysctl.h>
+#endif|' "$CPULIMIT_NG_C"
+  grep -n "sys/sysctl" "$CPULIMIT_NG_C" || true
+fi
 UPDATE_PACKAGE "rclone" "shidahuilang/openwrt-package" "main" "pkg" "rclone-config rclone-ng rclone-webui-react"
 UPDATE_PACKAGE "rclone-ng" "shidahuilang/openwrt-package" "main" "pkg"
 UPDATE_PACKAGE "rclone-webui-react" "shidahuilang/openwrt-package" "main" "pkg"
