@@ -73,7 +73,7 @@ if [ -n "$DOCKERMAN_MAKEFILE" ]; then
 fi
 
 # TurboACC / ModemData
-UPDATE_PACKAGE "turboacc" "chenmozhijin/turboacc" "main"
+UPDATE_PACKAGE "turboacc" "chenmozhijin/turboacc" "luci"
 #UPDATE_PACKAGE "luci-app-modemdata" "4IceG/luci-app-modemdata" "main"
 
 # FRP 内网穿透
@@ -113,10 +113,10 @@ if [ -n "$CPULIMIT_NG_C" ]; then
 #endif|' "$CPULIMIT_NG_C"
   grep -n "sys/sysctl" "$CPULIMIT_NG_C" || true
 fi
-UPDATE_PACKAGE "rclone" "shidahuilang/openwrt-package" "main" "pkg" "rclone-config rclone-ng rclone-webui-react"
-UPDATE_PACKAGE "rclone-ng" "shidahuilang/openwrt-package" "main" "pkg"
-UPDATE_PACKAGE "rclone-webui-react" "shidahuilang/openwrt-package" "main" "pkg"
-UPDATE_PACKAGE "luci-app-rclone" "shidahuilang/openwrt-package" "main" "pkg"
+UPDATE_PACKAGE "rclone" "shidahuilang/openwrt-package" "Lede" "pkg" "rclone-config rclone-ng rclone-webui-react"
+UPDATE_PACKAGE "rclone-ng" "shidahuilang/openwrt-package" "Lede" "pkg"
+UPDATE_PACKAGE "rclone-webui-react" "shidahuilang/openwrt-package" "Lede" "pkg"
+UPDATE_PACKAGE "luci-app-rclone" "shidahuilang/openwrt-package" "Lede" "pkg"
 UPDATE_PACKAGE "luci-app-fileassistant" "kenzok8/small-package" "main" "pkg"
 UPDATE_PACKAGE "luci-app-rtbwmon" "kenzok8/small-package" "main" "pkg"
 # luci-app-rtbwmon has PKG_VERSION=1.1.0-1 + empty release; APK rejects hyphenated version.
@@ -135,7 +135,7 @@ if [ -n "$MWAN3HELPER_MAKEFILE" ]; then
 fi
 UPDATE_PACKAGE "luci-app-lan-scanner" "adminchenyu/LAN-Scanner" "main" "name"
 UPDATE_PACKAGE "luci-app-serverchan" "schen39/luci-app-serverchan" "master"
-UPDATE_PACKAGE "luci-app-smartinfo" "shidahuilang/openwrt-package" "main" "pkg"
+UPDATE_PACKAGE "luci-app-smartinfo" "shidahuilang/openwrt-package" "Lede" "pkg"
 UPDATE_PACKAGE "luci-app-syscontrol" "bobbyunknown/luci-app-syscontrol" "main"
 UPDATE_PACKAGE "luci-app-disks-info" "gSpotx2f/luci-app-disks-info" "master"
 UPDATE_PACKAGE "luci-app-smbuser" "sbwml/luci-app-smbuser" "main"
