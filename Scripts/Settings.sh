@@ -66,15 +66,15 @@ if [[ "${WRT_TARGET^^}" == *"QUALCOMMAX"* ]]; then
 	#其他调整
 	echo "CONFIG_PACKAGE_kmod-usb-serial-qualcomm=y" >> ./.config
 
-	#自定义 NN6000 v2 机型显示名称：LuCI/系统信息显示为 laoguodong V2，编译目标仍保持 link_nn6000-v2
+	#自定义 NN6000 v2 机型显示名称：LuCI/系统信息显示为 LZD-HOME，编译目标仍保持 link_nn6000-v2
 	NN6000_V2_DTS="$DTS_PATH/ipq6000-nn6000-v2.dts"
 	NN6000_IPQ60XX_MK="./target/linux/qualcommax/image/ipq60xx.mk"
 	if [ -f "$NN6000_V2_DTS" ]; then
-		sed -i 's/model = "Link NN6000 v2";/model = "laoguodong V2";/' "$NN6000_V2_DTS"
+		sed -i 's/model = "Link NN6000 v2";/model = "LZD-HOME";/' "$NN6000_V2_DTS"
 	fi
 	if [ -f "$NN6000_IPQ60XX_MK" ]; then
-		sed -i '/define Device\/link_nn6000-common/,/endef/s/DEVICE_VENDOR := Link/DEVICE_VENDOR := laoguodong/' "$NN6000_IPQ60XX_MK"
-		sed -i '/define Device\/link_nn6000-v2/,/endef/s/DEVICE_MODEL := NN6000 v2/DEVICE_MODEL := V2/' "$NN6000_IPQ60XX_MK"
+		sed -i '/define Device\/link_nn6000-common/,/endef/s/DEVICE_VENDOR := Link/DEVICE_VENDOR := LZD/' "$NN6000_IPQ60XX_MK"
+		sed -i '/define Device\/link_nn6000-v2/,/endef/s/DEVICE_MODEL := NN6000 v2/DEVICE_MODEL := HOME/' "$NN6000_IPQ60XX_MK"
 		sed -i '/define Device\/link_nn6000-v2/,/endef/s/DEVICE_VARIANT := v2/DEVICE_VARIANT :=/' "$NN6000_IPQ60XX_MK"
 	fi
 
