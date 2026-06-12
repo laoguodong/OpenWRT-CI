@@ -139,11 +139,14 @@ UPDATE_PACKAGE "luci-app-lan-scanner" "adminchenyu/LAN-Scanner" "main" "name"
 UPDATE_PACKAGE "luci-app-serverchan" "schen39/luci-app-serverchan" "master"
 UPDATE_PACKAGE "luci-app-smartinfo" "shidahuilang/openwrt-package" "Lede" "pkg"
 UPDATE_PACKAGE "luci-app-syscontrol" "bobbyunknown/luci-app-syscontrol" "main"
-# ImmortalWrt rootfs has /var as a symlink/non-directory in staging; this package ships root/var/log/ram_release.log,
-# causing: cp: cannot overwrite non-directory .../root-qualcommax/./var with directory .../luci-app-syscontrol/./var
-SYSCONTROL_VAR_DIR=$(find ./luci-app-syscontrol -path '*/root/var' -type d -print -quit)
-if [ -n "$SYSCONTROL_VAR_DIR" ]; then
-  rm -rf "$SYSCONTROL_VAR_DIR"
+# ImmortalWrt rootfs has /var as a symlink/non-directory in staging; luci-app-syscontrol ships/installs /var/log/ram_release.log.
+# Remove both source var directory and Makefile install commands; otherwise Makefile fails on missing root/var/log/ram_release.log.
+SYSCONTROL_DIR=$(find . -maxdepth 2 -type d -name 'luci-app-syscontrol' -print -quit)
+if [ -n "$SYSCONTROL_DIR" ]; then
+  rm -rf "$SYSCONTROL_DIR/root/var"
+  if [ -f "$SYSCONTROL_DIR/Makefile" ]; then
+    sed -i '/\/var\/log/d; /ram_release\.log/d' "$SYSCONTROL_DIR/Makefile"
+  fi
 fi
 UPDATE_PACKAGE "luci-app-disks-info" "gSpotx2f/luci-app-disks-info" "master"
 UPDATE_PACKAGE "luci-app-smbuser" "sbwml/luci-app-smbuser" "main"
