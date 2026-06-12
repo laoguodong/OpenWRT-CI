@@ -127,6 +127,12 @@ if [ -n "$RTBWMON_MAKEFILE" ]; then
 fi
 UPDATE_PACKAGE "luci-app-syncdial" "kenzok8/small-package" "main" "pkg"
 UPDATE_PACKAGE "luci-app-mwan3helper" "kenzok8/small-package" "main" "pkg"
+# pdnsd-alt is not present in current ImmortalWrt feeds; mwan3helper can work without hard depending on it.
+MWAN3HELPER_MAKEFILE=$(find . -path '*/luci-app-mwan3helper/Makefile' -print -quit)
+if [ -n "$MWAN3HELPER_MAKEFILE" ]; then
+  sed -i 's/[[:space:]]*+pdnsd-alt//g' "$MWAN3HELPER_MAKEFILE"
+  grep -E '^LUCI_DEPENDS' "$MWAN3HELPER_MAKEFILE" || true
+fi
 UPDATE_PACKAGE "luci-app-lan-scanner" "adminchenyu/LAN-Scanner" "main" "name"
 UPDATE_PACKAGE "luci-app-serverchan" "schen39/luci-app-serverchan" "master"
 UPDATE_PACKAGE "luci-app-smartinfo" "shidahuilang/openwrt-package" "main" "pkg"
