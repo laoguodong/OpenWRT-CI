@@ -47,7 +47,7 @@ jobs:
       #默认主题
       WRT_THEME: aurora
       #默认主机名
-      WRT_NAME: NN6000
+      WRT_NAME: LZD-HOME
       #默认WIFI名称
       WRT_SSID: NN6000
       #默认WIFI密码
