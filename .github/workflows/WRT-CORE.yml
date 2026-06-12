@@ -159,6 +159,20 @@ jobs:
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
+          # Free disk: video feed is not used by router targets and pulls large desktop/game packages.
+          rm -rf ./feeds/video ./package/feeds/video
+
+      - name: Free Disk Space
+        if: env.WRT_TEST != 'true'
+        run: |
+          echo "========== disk before cleanup =========="
+          df -h
+          sudo rm -rf /usr/share/dotnet                       /usr/local/lib/android                       /opt/ghc                       /opt/hostedtoolcache/CodeQL                       /usr/local/.ghcup                       /usr/local/share/boost                       "$AGENT_TOOLSDIRECTORY" || true
+          sudo docker image prune -a -f || true
+          sudo apt-get clean || true
+          echo "========== disk after cleanup =========="
+          df -h
+
       - name: Custom Packages
         run: |
           cd ./wrt/package/
