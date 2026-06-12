@@ -101,6 +101,30 @@ UPDATE_PACKAGE "mosdns" "sbwml/luci-app-mosdns" "v5" "" "v2dat"
 UPDATE_PACKAGE "netwizard" "sirpdboy/luci-app-netwizard" "main"
 UPDATE_PACKAGE "openlist2" "sbwml/luci-app-openlist2" "main"
 UPDATE_PACKAGE "partexp" "sirpdboy/luci-app-partexp" "main"
+
+# 对齐旧路由常用管理插件
+UPDATE_PACKAGE "cpulimit-ng" "gangbanlau/cpulimit-ng" "master"
+UPDATE_PACKAGE "rclone" "shidahuilang/openwrt-package" "main" "pkg" "rclone-config rclone-ng rclone-webui-react"
+UPDATE_PACKAGE "rclone-ng" "shidahuilang/openwrt-package" "main" "pkg"
+UPDATE_PACKAGE "rclone-webui-react" "shidahuilang/openwrt-package" "main" "pkg"
+UPDATE_PACKAGE "luci-app-rclone" "shidahuilang/openwrt-package" "main" "pkg"
+UPDATE_PACKAGE "luci-app-fileassistant" "kenzok8/small-package" "main" "pkg"
+UPDATE_PACKAGE "luci-app-rtbwmon" "kenzok8/small-package" "main" "pkg"
+# luci-app-rtbwmon has PKG_VERSION=1.1.0-1 + empty release; APK rejects hyphenated version.
+RTBWMON_MAKEFILE=$(find . -path '*/luci-app-rtbwmon/Makefile' -print -quit)
+if [ -n "$RTBWMON_MAKEFILE" ]; then
+  sed -i "s/^PKG_VERSION:=1\.1\.0-1/PKG_VERSION:=1.1.0/; s/^PKG_RELEASE:=.*/PKG_RELEASE:=1/" "$RTBWMON_MAKEFILE"
+  grep -E '^(PKG_VERSION|PKG_RELEASE):=' "$RTBWMON_MAKEFILE"
+fi
+UPDATE_PACKAGE "luci-app-syncdial" "kenzok8/small-package" "main" "pkg"
+UPDATE_PACKAGE "luci-app-mwan3helper" "kenzok8/small-package" "main" "pkg"
+UPDATE_PACKAGE "luci-app-lan-scanner" "adminchenyu/LAN-Scanner" "main" "name"
+UPDATE_PACKAGE "luci-app-serverchan" "schen39/luci-app-serverchan" "master"
+UPDATE_PACKAGE "luci-app-smartinfo" "shidahuilang/openwrt-package" "main" "pkg"
+UPDATE_PACKAGE "luci-app-syscontrol" "bobbyunknown/luci-app-syscontrol" "main"
+UPDATE_PACKAGE "luci-app-disks-info" "gSpotx2f/luci-app-disks-info" "master"
+UPDATE_PACKAGE "luci-app-smbuser" "sbwml/luci-app-smbuser" "main"
+UPDATE_PACKAGE "luci-app-wizard" "kiddin9/luci-app-wizard" "main"
 #UPDATE_PACKAGE "qbittorrent" "sbwml/luci-app-qbittorrent" "master" "" "qt6base qt6tools rblibtorrent"
 #UPDATE_PACKAGE "qmodem" "FUjr/QModem" "main"
 UPDATE_PACKAGE "quickfile" "sbwml/luci-app-quickfile" "main"
