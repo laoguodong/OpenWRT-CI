@@ -192,7 +192,18 @@ jobs:
         run: |
           cd ./wrt/
 
-          make -j$(nproc) || make -j1 V=s
+          set +e
+          make -j$(nproc) 2>&1 | tee ../compile-parallel.log
+          BUILD_STATUS=${PIPESTATUS[0]}
+          if [ "$BUILD_STATUS" -ne 0 ]; then
+            make -j1 V=s 2>&1 | tee ../compile-verbose.log
+            BUILD_STATUS=${PIPESTATUS[0]}
+          fi
+          if [ "$BUILD_STATUS" -ne 0 ]; then
+            echo "========== COMPILE FAILURE SUMMARY =========="
+            grep -RniE 'ERROR:|failed to build|package/.*failed|make\[[0-9]+\].*Error|No rule|No such file|undefined reference|fatal:|collect2: error|cannot find|not found|Killed|timeout|Command exited|Error:' ../compile-*.log | tail -300 || true
+            exit "$BUILD_STATUS"
+          fi
 
       - name: Machine Information
         run: |
