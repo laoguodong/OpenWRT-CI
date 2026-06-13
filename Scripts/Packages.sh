@@ -78,7 +78,8 @@ UPDATE_PACKAGE "turboacc" "chenmozhijin/turboacc" "luci"
 # from TurboACC metadata so defconfig no longer emits missing-dependency warnings.
 TURBOACC_MAKEFILE=$(find ./turboacc -path '*/luci-app-turboacc/Makefile' -print -quit)
 if [ -n "$TURBOACC_MAKEFILE" ]; then
-  sed -i 's/[[:space:]]*+kmod-fast-classifier//g; s/[[:space:]]*+kmod-shortcut-fe-cm//g; s/[[:space:]]*+kmod-shortcut-fe-drv//g; s/[[:space:]]*+kmod-shortcut-fe//g' "$TURBOACC_MAKEFILE"
+  perl -0pi -e 's/\
+\s*\+kmod-(?:fast-classifier|shortcut-fe(?:-cm|-drv)?)//g; s/[[:space:]]*\+kmod-(?:fast-classifier|shortcut-fe(?:-cm|-drv)?)//g' "$TURBOACC_MAKEFILE"
   grep -E '^(LUCI_DEPENDS|DEPENDS):=' "$TURBOACC_MAKEFILE" || true
 fi
 #UPDATE_PACKAGE "luci-app-modemdata" "4IceG/luci-app-modemdata" "main"
