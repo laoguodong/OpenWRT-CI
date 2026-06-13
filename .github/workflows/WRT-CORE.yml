@@ -165,12 +165,22 @@ jobs:
           # Drop desktop/multimedia/LXC packages that are irrelevant to this router target and
           # emit missing dependency warnings during metadata scans.
           rm -rf ./feeds/video ./package/feeds/video
-          find ./feeds/packages ./feeds/luci ./feeds/telephony -type d             \( -name 'gst1-*' -o -name 'gstreamer1*' -o -name 'gmediarender' -o -name 'dmapd'                -o -name 'grilo-*' -o -name 'lcdgrilo' -o -name 'lcdringer' -o -name 'libdmapsharing'                -o -name 'libextractor' -o -name 'lxc' -o -name 'luci-app-lxc' -o -name 'rpcd-mod-lxc'                -o -name 'baresip' \)             -prune -exec rm -rf {} + 2>/dev/null || true
+          find ./feeds/packages ./feeds/luci ./feeds/telephony -type d \
+            \( -name 'gst1-*' -o -name 'gstreamer1*' -o -name 'gmediarender' -o -name 'dmapd' \
+               -o -name 'grilo' -o -name 'grilo-*' -o -name 'gnunet' -o -name 'lcdgrilo' -o -name 'lcdringer' \
+               -o -name 'libdmapsharing' -o -name 'libextractor' -o -name 'lxc' -o -name 'luci-app-lxc' \
+               -o -name 'rpcd-mod-lxc' -o -name 'baresip' -o -name 'baresip-*' \) \
+            -prune -exec rm -rf {} + 2>/dev/null || true
 
           ./scripts/feeds install -a
 
           rm -rf ./feeds/video ./package/feeds/video
-          find ./package/feeds ./feeds/packages ./feeds/luci ./feeds/telephony -type d             \( -name 'gst1-*' -o -name 'gstreamer1*' -o -name 'gmediarender' -o -name 'dmapd'                -o -name 'grilo-*' -o -name 'lcdgrilo' -o -name 'lcdringer' -o -name 'libdmapsharing'                -o -name 'libextractor' -o -name 'lxc' -o -name 'luci-app-lxc' -o -name 'rpcd-mod-lxc'                -o -name 'baresip' \)             -prune -exec rm -rf {} + 2>/dev/null || true
+          find ./package/feeds ./feeds/packages ./feeds/luci ./feeds/telephony -type d \
+            \( -name 'gst1-*' -o -name 'gstreamer1*' -o -name 'gmediarender' -o -name 'dmapd' \
+               -o -name 'grilo' -o -name 'grilo-*' -o -name 'gnunet' -o -name 'lcdgrilo' -o -name 'lcdringer' \
+               -o -name 'libdmapsharing' -o -name 'libextractor' -o -name 'lxc' -o -name 'luci-app-lxc' \
+               -o -name 'rpcd-mod-lxc' -o -name 'baresip' -o -name 'baresip-*' \) \
+            -prune -exec rm -rf {} + 2>/dev/null || true
 
       - name: Free Disk Space
         if: env.WRT_TEST != 'true'
