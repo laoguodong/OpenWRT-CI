@@ -74,6 +74,13 @@ fi
 
 # TurboACC / ModemData
 UPDATE_PACKAGE "turboacc" "chenmozhijin/turboacc" "luci"
+# This NSS build does not ship Shortcut-FE/fast-classifier packages. Remove optional deps
+# from TurboACC metadata so defconfig no longer emits missing-dependency warnings.
+TURBOACC_MAKEFILE=$(find ./turboacc -path '*/luci-app-turboacc/Makefile' -print -quit)
+if [ -n "$TURBOACC_MAKEFILE" ]; then
+  sed -i 's/[[:space:]]*+kmod-fast-classifier//g; s/[[:space:]]*+kmod-shortcut-fe-cm//g; s/[[:space:]]*+kmod-shortcut-fe-drv//g; s/[[:space:]]*+kmod-shortcut-fe//g' "$TURBOACC_MAKEFILE"
+  grep -E '^(LUCI_DEPENDS|DEPENDS):=' "$TURBOACC_MAKEFILE" || true
+fi
 #UPDATE_PACKAGE "luci-app-modemdata" "4IceG/luci-app-modemdata" "main"
 
 # FRP 内网穿透

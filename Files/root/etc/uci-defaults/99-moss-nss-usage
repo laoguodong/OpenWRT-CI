@@ -1,0 +1,7 @@
+#!/bin/sh
+# Ensure debugfs is available so NSS CPU utilization can be read after boot.
+grep -qE '^[^#]+[[:space:]]+/sys/kernel/debug[[:space:]]+debugfs' /etc/fstab 2>/dev/null || \
+    echo 'debugfs /sys/kernel/debug debugfs defaults 0 0' >> /etc/fstab
+mkdir -p /sys/kernel/debug
+mount -t debugfs debugfs /sys/kernel/debug 2>/dev/null || true
+exit 0

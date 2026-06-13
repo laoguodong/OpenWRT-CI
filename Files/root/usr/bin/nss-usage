@@ -1,0 +1,38 @@
+#!/bin/sh
+# Show Qualcomm NSS firmware CPU utilization when qca-nss-drv exposes debugfs stats.
+# Expected path on NSS builds: /sys/kernel/debug/qca-nss-drv/stats/cpu_load_ubi
+set -eu
+
+DEBUG_ROOT="/sys/kernel/debug"
+NSS_CPU_FILE="$DEBUG_ROOT/qca-nss-drv/stats/cpu_load_ubi"
+
+mount_debugfs() {
+    if ! mount | grep -q "on $DEBUG_ROOT type debugfs"; then
+        mount -t debugfs debugfs "$DEBUG_ROOT" 2>/dev/null || true
+    fi
+}
+
+read_pct() {
+    awk '
+        /Min[[:space:]]+Avg[[:space:]]+Max/ { getline; gsub(/%/, "", $0); print $2; found=1; exit }
+        END { if (!found) exit 1 }
+    ' "$1" 2>/dev/null
+}
+
+mount_debugfs
+
+if [ ! -r "$NSS_CPU_FILE" ]; then
+    echo "NSS usage: unavailable"
+    echo "Reason: $NSS_CPU_FILE is not readable. Check kmod-qca-nss-drv and debugfs."
+    exit 1
+fi
+
+AVG="$(read_pct "$NSS_CPU_FILE" || true)"
+if [ -z "$AVG" ]; then
+    echo "NSS usage: unavailable"
+    echo "Raw output:"
+    cat "$NSS_CPU_FILE" 2>/dev/null || true
+    exit 1
+fi
+
+echo "NSS usage: ${AVG}%"
