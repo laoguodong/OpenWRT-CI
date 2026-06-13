@@ -167,17 +167,18 @@ jobs:
           rm -rf ./feeds/video ./package/feeds/video
           find ./feeds/packages ./feeds/luci ./feeds/telephony -type d \
             \( -name 'gst1-*' -o -name 'gstreamer1*' -o -name 'gmediarender' -o -name 'dmapd' \
-               -o -name 'grilo' -o -name 'grilo-*' -o -name 'gnunet' -o -name 'lcdgrilo' -o -name 'lcdringer' \
+               -o -name 'grilo' -o -name 'grilo-*' -o -name 'gnunet' -o -name 'gnunet-fuse' -o -name 'lcdgrilo' -o -name 'lcdringer' \
                -o -name 'libdmapsharing' -o -name 'libextractor' -o -name 'lxc' -o -name 'luci-app-lxc' \
                -o -name 'rpcd-mod-lxc' -o -name 'baresip' -o -name 'baresip-*' \) \
             -prune -exec rm -rf {} + 2>/dev/null || true
+          ./scripts/feeds update -i packages luci telephony || true
 
           ./scripts/feeds install -a
 
           rm -rf ./feeds/video ./package/feeds/video
           find ./package/feeds ./feeds/packages ./feeds/luci ./feeds/telephony -type d \
             \( -name 'gst1-*' -o -name 'gstreamer1*' -o -name 'gmediarender' -o -name 'dmapd' \
-               -o -name 'grilo' -o -name 'grilo-*' -o -name 'gnunet' -o -name 'lcdgrilo' -o -name 'lcdringer' \
+               -o -name 'grilo' -o -name 'grilo-*' -o -name 'gnunet' -o -name 'gnunet-fuse' -o -name 'lcdgrilo' -o -name 'lcdringer' \
                -o -name 'libdmapsharing' -o -name 'libextractor' -o -name 'lxc' -o -name 'luci-app-lxc' \
                -o -name 'rpcd-mod-lxc' -o -name 'baresip' -o -name 'baresip-*' \) \
             -prune -exec rm -rf {} + 2>/dev/null || true
