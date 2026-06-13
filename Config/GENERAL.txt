@@ -27,6 +27,15 @@ CONFIG_PACKAGE_docker=y
 CONFIG_PACKAGE_dockerd=y
 CONFIG_PACKAGE_docker-compose=y
 CONFIG_PACKAGE_luci-app-dockerman=y
+# 避免 LXC 触发 shadow-newuidmap/newgidmap 缺失告警；主路由只需要 Docker。
+CONFIG_PACKAGE_lxc=n
+CONFIG_PACKAGE_lxc-auto=n
+CONFIG_PACKAGE_lxc-common=n
+CONFIG_PACKAGE_lxc-attach=n
+CONFIG_PACKAGE_lxc-create=n
+CONFIG_PACKAGE_lxc-start=n
+CONFIG_PACKAGE_lxc-stop=n
+CONFIG_PACKAGE_lxc-ls=n
 
 #删除/避免重复代理栈与不需要组件
 CONFIG_PACKAGE_luci-app-attendedsysupgrade=n
@@ -214,6 +223,10 @@ CONFIG_PACKAGE_luci-app-turboacc_INCLUDE_SHORTCUT_FE_DRV=n
 CONFIG_PACKAGE_luci-app-turboacc_INCLUDE_OFFLOADING=n
 CONFIG_PACKAGE_luci-app-turboacc_INCLUDE_SHORTCUT_FE=n
 CONFIG_PACKAGE_luci-app-turboacc_INCLUDE_SHORTCUT_FE_CM=n
+CONFIG_PACKAGE_kmod-fast-classifier=n
+CONFIG_PACKAGE_kmod-shortcut-fe=n
+CONFIG_PACKAGE_kmod-shortcut-fe-cm=n
+CONFIG_PACKAGE_kmod-shortcut-fe-drv=n
 CONFIG_PACKAGE_kmod-qca-nss-drv=y
 CONFIG_PACKAGE_kmod-qca-nss-ecm=y
 CONFIG_PACKAGE_kmod-qca-nss-dp=y
@@ -228,12 +241,12 @@ CONFIG_PACKAGE_kmod-qca-nss-drv-pptp=y
 CONFIG_PACKAGE_kmod-qca-nss-drv-l2tpv2=y
 CONFIG_NSS_FIRMWARE_VERSION_12_5=y
 
-#依赖修复：Dockerman 库与 Docker/LXC 用户映射
+#依赖修复：Dockerman 库；不启用 LXC，避免 shadow-newuidmap/newgidmap 缺失告警
 CONFIG_PACKAGE_luci-lib-docker=y
-CONFIG_PACKAGE_shadow-newuidmap=y
-CONFIG_PACKAGE_shadow-newgidmap=y
-CONFIG_PACKAGE_shadow-subuid=y
-CONFIG_PACKAGE_shadow-subgid=y
+CONFIG_PACKAGE_shadow-newuidmap=n
+CONFIG_PACKAGE_shadow-newgidmap=n
+CONFIG_PACKAGE_shadow-subuid=n
+CONFIG_PACKAGE_shadow-subgid=n
 
 #依赖缺失规避：先移除会导致 warning/失败的包
 CONFIG_PACKAGE_luci-app-modemdata=n

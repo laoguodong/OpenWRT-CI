@@ -1,0 +1,16 @@
+<%+header%>
+<div class="cbi-map">
+  <h2 name="content"><%:NSS Usage%></h2>
+  <div class="cbi-section">
+    <% if usage then %>
+      <div style="font-size:32px;font-weight:600;margin:12px 0;"><%=usage%>%</div>
+      <p><%:Qualcomm NSS firmware CPU utilization, averaged over 1 second.%></p>
+    <% else %>
+      <p><strong><%:NSS usage unavailable%></strong></p>
+      <p><%:The NSS debugfs counter is not readable. Verify kmod-qca-nss-drv and debugfs.%></p>
+    <% end %>
+    <pre style="white-space:pre-wrap"><%=raw or ""%></pre>
+    <p style="color:#666"><%:Source:%> <%=path%></p>
+  </div>
+</div>
+<%+footer%>

@@ -75,13 +75,14 @@ jobs:
           # Disable Microsoft/Azure sources before apt update to avoid unrelated 403 signature failures.
           sudo rm -f /etc/apt/sources.list.d/azure-cli*.list /etc/apt/sources.list.d/microsoft*.list /etc/apt/sources.list.d/packages-microsoft-prod.list 2>/dev/null || true
           sudo find /etc/apt/sources.list.d -type f -maxdepth 1 -name '*.list' -print -exec grep -H "packages.microsoft.com" {} \; -exec sudo sed -i '/packages\.microsoft\.com/d' {} \; 2>/dev/null || true
-          sudo -E apt -yqq purge firefox
-          sudo -E apt -yqq update
-          sudo -E apt -yqq full-upgrade
-          sudo -E apt -yqq autoremove --purge
-          sudo -E apt -yqq autoclean
-          sudo -E apt -yqq clean
-          sudo -E apt -yqq install dos2unix libfuse-dev
+          git config --global init.defaultBranch main
+          sudo -E apt-get -yqq purge firefox
+          sudo -E apt-get -yqq update
+          sudo -E apt-get -yqq full-upgrade
+          sudo -E apt-get -yqq autoremove --purge
+          sudo -E apt-get -yqq autoclean
+          sudo -E apt-get -yqq clean
+          sudo -E apt-get -yqq install dos2unix libfuse-dev
           sudo bash -c 'bash <(curl -sL https://build-scripts.immortalwrt.org/init_build_environment.sh)'
           sudo -E systemctl daemon-reload
           sudo -E timedatectl set-timezone "Asia/Shanghai"
@@ -156,11 +157,19 @@ jobs:
         run: |
           cd ./wrt/
 
+          # Router targets do not need the video feed; remove it before feed install to avoid
+          # pulling desktop/game packages such as gstreamer/libwayland into package metadata.
+          sed -i '/^[[:space:]]*src-git[[:space:]]\+video[[:space:]]/d' feeds.conf.default
+
           ./scripts/feeds update -a
+          # Drop desktop/multimedia packages that are irrelevant to this router target and
+          # emit libwayland/libmesa/libgraphene dependency warnings during metadata scans.
+          rm -rf ./feeds/video ./package/feeds/video
+          find ./feeds/packages -maxdepth 3 -type d \( -name 'gst1-*' -o -name 'gstreamer1*' \) -prune -exec rm -rf {} +
+
           ./scripts/feeds install -a
 
-          # Free disk: video feed is not used by router targets and pulls large desktop/game packages.
-          rm -rf ./feeds/video ./package/feeds/video
+          rm -rf ./feeds/video ./package/feeds/video ./package/feeds/packages/gst1-* ./package/feeds/packages/gstreamer1*
 
       - name: Free Disk Space
         if: env.WRT_TEST != 'true'
