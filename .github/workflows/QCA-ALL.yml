@@ -37,7 +37,7 @@ jobs:
       matrix:
         CONFIG: [IPQ60XX-WIFI-NO, IPQ60XX-WIFI-YES, IPQ60XX-JDCLOUD-AX5-WIFI-NO, IPQ60XX-JDCLOUD-AX5-WIFI-YES]
         SOURCE: [VIKINGYFY/immortalwrt]
-        BRANCH: [main]
+        BRANCH: [ac6d2f17ddcc6ae33c12e246f848ca0d06b5cd84]
 
     #调用公用编译核心WRT-CORE.yml
     uses: ./.github/workflows/WRT-CORE.yml
