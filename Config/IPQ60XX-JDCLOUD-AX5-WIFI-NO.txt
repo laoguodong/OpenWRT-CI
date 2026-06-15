@@ -1,0 +1,16 @@
+#设备平台
+CONFIG_TARGET_qualcommax=y
+CONFIG_TARGET_qualcommax_ipq60xx=y
+#设备列表：Redmi AX5 JDCloud（京东云 AX5），无 WiFi 版本
+CONFIG_TARGET_DEVICE_qualcommax_ipq60xx_DEVICE_redmi_ax5-jdcloud=y
+# rootfs 分区大小：京东云 AX5 为 eMMC 设备，保持 256MiB 预留插件空间
+CONFIG_TARGET_ROOTFS_PARTSIZE=256
+#WIFI驱动
+CONFIG_PACKAGE_kmod-ath=n
+CONFIG_PACKAGE_kmod-ath11k=n
+CONFIG_PACKAGE_kmod-ath11k-ahb=n
+CONFIG_PACKAGE_kmod-ath11k-pci=n
+CONFIG_PACKAGE_ath11k-firmware-ipq6018=n
+CONFIG_PACKAGE_ath11k-firmware-ipq6018-ddwrt=n
+CONFIG_PACKAGE_ath11k-firmware-qcn9074=n
+CONFIG_PACKAGE_ath11k-firmware-qcn9074-ddwrt=n
