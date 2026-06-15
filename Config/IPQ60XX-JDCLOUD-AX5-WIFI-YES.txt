@@ -3,5 +3,5 @@ CONFIG_TARGET_qualcommax=y
 CONFIG_TARGET_qualcommax_ipq60xx=y
 #设备列表：Redmi AX5 JDCloud（京东云 AX5），有 WiFi 版本
 CONFIG_TARGET_DEVICE_qualcommax_ipq60xx_DEVICE_redmi_ax5-jdcloud=y
-# rootfs 分区大小：京东云 AX5 为 eMMC 设备，保持 256MiB 预留插件空间
+# rootfs 镜像大小：京东云 AX5 为 eMMC 设备，限制为 256MiB；不自动改 eMMC 分区表
 CONFIG_TARGET_ROOTFS_PARTSIZE=256
