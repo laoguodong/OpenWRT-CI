@@ -36,10 +36,11 @@ sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $CFG_FILE
 sed -i "s/hostname='.*'/hostname='$WRT_NAME'/g" $CFG_FILE
 
 
-#注入 MOSS 自定义根文件：NSS 使用率脚本、LuCI 状态页等
+#注入 MOSS 自定义根文件：NSS 使用率脚本、LuCI 状态页、apk+iStore 兼容修复等
 if [ -d "$GITHUB_WORKSPACE/Files/root" ]; then
 	mkdir -p ./package/base-files/files
 	cp -a "$GITHUB_WORKSPACE/Files/root/." ./package/base-files/files/
+	find ./package/base-files/files/etc/uci-defaults ./package/base-files/files/usr/bin -type f 2>/dev/null -exec chmod 0755 {} +
 fi
 
 #配置文件修改
