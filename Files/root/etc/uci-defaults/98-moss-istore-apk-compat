@@ -17,7 +17,7 @@ seed_apk_status_dir() {
 	mkdir -p "$info_dir"
 	[ -f "$status" ] || : > "$status"
 
-	for pkg in libc procd ubus uci opkg bash curl tar coreutils mount-utils block-mount \
+	for pkg in libc procd ubus uci opkg bash curl jq tar coreutils mount-utils block-mount iputils-arping \
 		lsblk blkid e2fsprogs parted smartmontools smartd swap-utils zoneinfo-asia \
 		docker dockerd containerd runc docker-compose luci-lib-docker luci-app-dockerman \
 		docker-deps taskd script-utils coreutils-stty \
@@ -25,7 +25,7 @@ seed_apk_status_dir() {
 		rpcd uhttpd uhttpd-mod-ubus ucode \
 		rpcd-mod-file rpcd-mod-iwinfo rpcd-mod-luci rpcd-mod-ucode \
 		ucode-mod-fs ucode-mod-ubus ucode-mod-uci ucode-mod-uloop \
-		luci-app-diskman app-meta-diskman; do
+		luci-app-diskman app-meta-diskman luci-app-serverchan app-meta-serverchan serverchan-deps; do
 		grep -q "^Package: ${pkg}$" "$status" 2>/dev/null && continue
 		line=$(apk list -I 2>/dev/null | grep -m1 "^${pkg}-") || continue
 		ver=${line#${pkg}-}
@@ -74,7 +74,7 @@ patch_is_opkg() {
 			print "    mkdir -p \"$root/usr/lib/opkg/info\""
 			print "    [ -f \"$root/usr/lib/opkg/status\" ] || : > \"$root/usr/lib/opkg/status\""
 			print "    local pkg line ver arch"
-			print "    for pkg in libc procd ubus uci opkg bash curl tar coreutils mount-utils block-mount lsblk blkid e2fsprogs parted smartmontools smartd swap-utils zoneinfo-asia docker dockerd containerd runc docker-compose luci-lib-docker luci-app-dockerman docker-deps taskd script-utils coreutils-stty luci-base luci-compat luci-lib-ipkg luci-lib-taskd luci-lib-xterm rpcd uhttpd uhttpd-mod-ubus ucode rpcd-mod-file rpcd-mod-iwinfo rpcd-mod-luci rpcd-mod-ucode ucode-mod-fs ucode-mod-ubus ucode-mod-uci ucode-mod-uloop luci-app-diskman app-meta-diskman; do"
+			print "    for pkg in libc procd ubus uci opkg bash curl jq tar coreutils mount-utils block-mount iputils-arping lsblk blkid e2fsprogs parted smartmontools smartd swap-utils zoneinfo-asia docker dockerd containerd runc docker-compose luci-lib-docker luci-app-dockerman docker-deps taskd script-utils coreutils-stty luci-base luci-compat luci-lib-ipkg luci-lib-taskd luci-lib-xterm rpcd uhttpd uhttpd-mod-ubus ucode rpcd-mod-file rpcd-mod-iwinfo rpcd-mod-luci rpcd-mod-ucode ucode-mod-fs ucode-mod-ubus ucode-mod-uci ucode-mod-uloop luci-app-diskman app-meta-diskman luci-app-serverchan app-meta-serverchan serverchan-deps; do"
 			print "        grep -q \"^Package: ${pkg}$\" \"$root/usr/lib/opkg/status\" 2>/dev/null && continue"
 			print "        line=$(apk list -I 2>/dev/null | grep -m1 \"^${pkg}-\") || continue"
 			print "        ver=${line#${pkg}-}; ver=${ver%% *}"
