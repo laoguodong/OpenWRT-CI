@@ -1,0 +1,18 @@
+#!/bin/sh
+# MOSS: remove unavailable ImmortalWrt snapshot apk feeds.
+# Current qualcommax/ipq60xx apk snapshots may ship an nss_packages feed URL,
+# but downloads.immortalwrt.org and common mirrors do not provide that directory.
+# Leaving it enabled makes every apk update report wget error 8 / unexpected EOF.
+
+export PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/sbin:/usr/local/bin
+
+REPO_FILE="/etc/apk/repositories"
+[ -f "$REPO_FILE" ] || exit 0
+
+if grep -q '/nss_packages' "$REPO_FILE" 2>/dev/null; then
+	cp -a "$REPO_FILE" "$REPO_FILE.bak-moss-$(date +%Y%m%d-%H%M%S)" 2>/dev/null || true
+	sed -i '/\/nss_packages\b/d' "$REPO_FILE"
+	logger -t moss-apk-repositories "removed unavailable nss_packages feed from $REPO_FILE"
+fi
+
+exit 0

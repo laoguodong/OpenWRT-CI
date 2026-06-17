@@ -64,7 +64,7 @@ jobs:
       #默认主机名
       WRT_NAME: LZD-HOME
       #默认WIFI名称
-      WRT_SSID: NN6000
+      WRT_SSID: LZD-HOME
       #默认WIFI密码
       WRT_WORD: 12345678
       #默认地址
