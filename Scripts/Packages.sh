@@ -76,8 +76,9 @@ fi
 #UPDATE_PACKAGE "luci-app-modemdata" "4IceG/luci-app-modemdata" "main"
 
 # FRP 内网穿透
-UPDATE_PACKAGE "frp" "kuoruan/openwrt-frp" "master"
-UPDATE_PACKAGE "luci-app-frpc" "kuoruan/luci-app-frpc" "master"
+# Use ImmortalWrt/OpenWrt official feed packages for frpc/luci-app-frpc.
+# The legacy kuoruan packages can produce incomplete APK runtime installs on apk-based builds
+# and leave LuCI with a partial frpc page after flashing.
 UPDATE_PACKAGE "kucat" "sirpdboy/luci-theme-kucat" "master"
 UPDATE_PACKAGE "kucat-config" "sirpdboy/luci-app-kucat-config" "master"
 
