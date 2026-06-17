@@ -54,12 +54,26 @@ UPDATE_PACKAGE "aurora-config" "eamonxg/luci-app-aurora-config" "master"
 
 # iStore 软件中心
 UPDATE_PACKAGE "istore" "linkease/istore" "main"
-# iStore upstream uses PKG_VERSION=0.1.32-1 with empty PKG_RELEASE; APK rejects hyphenated version.
-# Normalize to PKG_VERSION=0.1.32 + PKG_RELEASE=1 for current ImmortalWrt apk packaging.
+# iStore upstream may use APK-invalid versions such as 0.1.32-1 or 0.2.0-r2.
+# OpenWrt packaging appends PKG_RELEASE again, producing versions like 0.2.0-r2-r1,
+# which apk rejects. Normalize PKG_VERSION to pure upstream version and PKG_RELEASE to numeric.
 # Packages.sh is executed from the OpenWrt package/ directory, so search relative to cwd.
 ISTORE_STORE_MAKEFILE=$(find . -path '*/luci-app-store/Makefile' -print -quit)
 if [ -n "$ISTORE_STORE_MAKEFILE" ]; then
-  sed -i "s/^PKG_VERSION:=0\.1\.32-1/PKG_VERSION:=0.1.32/; s/^PKG_RELEASE:=.*/PKG_RELEASE:=1/" "$ISTORE_STORE_MAKEFILE"
+  python3 - "$ISTORE_STORE_MAKEFILE" <<'PY'
+import pathlib, re, sys
+path = pathlib.Path(sys.argv[1])
+text = path.read_text()
+m = re.search(r'^PKG_VERSION:=([0-9][0-9.]*)(?:-r?([0-9]+))?\s*$', text, re.M)
+if m:
+    version, release = m.group(1), m.group(2) or '1'
+    text = re.sub(r'^PKG_VERSION:=.*$', f'PKG_VERSION:={version}', text, flags=re.M)
+    if re.search(r'^PKG_RELEASE:=.*$', text, re.M):
+        text = re.sub(r'^PKG_RELEASE:=.*$', f'PKG_RELEASE:={release}', text, flags=re.M)
+    else:
+        text = re.sub(r'^(PKG_VERSION:=.*)$', r'\1\nPKG_RELEASE:=' + release, text, count=1, flags=re.M)
+path.write_text(text)
+PY
   grep -E '^(PKG_VERSION|PKG_RELEASE):=' "$ISTORE_STORE_MAKEFILE"
 fi
 UPDATE_PACKAGE "dockerman" "lisaac/luci-app-dockerman" "master"
