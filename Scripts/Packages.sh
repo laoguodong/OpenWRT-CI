@@ -135,7 +135,7 @@ if [ -n "$MWAN3HELPER_MAKEFILE" ]; then
   grep -E '^LUCI_DEPENDS' "$MWAN3HELPER_MAKEFILE" || true
 fi
 UPDATE_PACKAGE "luci-app-lan-scanner" "adminchenyu/LAN-Scanner" "main" "name"
-UPDATE_PACKAGE "luci-app-serverchan" "schen39/luci-app-serverchan" "master"
+UPDATE_PACKAGE "luci-app-serverchan" "tty228/luci-app-serverchan" "master"
 UPDATE_PACKAGE "luci-app-syscontrol" "bobbyunknown/luci-app-syscontrol" "main"
 # ImmortalWrt rootfs has /var as a symlink/non-directory in staging; luci-app-syscontrol ships/installs /var/log/ram_release.log.
 # Remove both source var directory and Makefile install commands; otherwise Makefile fails on missing root/var/log/ram_release.log.
