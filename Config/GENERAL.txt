@@ -26,7 +26,12 @@ CONFIG_PACKAGE_luci-theme-shadcn=y
 CONFIG_PACKAGE_docker=y
 CONFIG_PACKAGE_dockerd=y
 CONFIG_PACKAGE_docker-compose=y
+CONFIG_PACKAGE_luci-lib-docker=y
 CONFIG_PACKAGE_luci-app-dockerman=y
+CONFIG_PACKAGE_zoneinfo-asia=y
+CONFIG_PACKAGE_coreutils=y
+CONFIG_PACKAGE_coreutils-stty=y
+CONFIG_PACKAGE_script-utils=y
 # 避免 LXC 触发 shadow-newuidmap/newgidmap 缺失告警；主路由只需要 Docker。
 CONFIG_PACKAGE_lxc=n
 CONFIG_PACKAGE_lxc-auto=n
