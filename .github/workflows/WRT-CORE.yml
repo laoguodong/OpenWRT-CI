@@ -234,8 +234,15 @@ jobs:
         run: |
           cd ./wrt/
 
+          # Full nproc parallelism plus LTO can starve the GitHub runner agent and make it
+          # lose server communication. Keep one CPU available for the runner/heartbeat.
+          BUILD_JOBS=$(($(nproc) - 1))
+          [ "$BUILD_JOBS" -ge 1 ] || BUILD_JOBS=1
+          [ "$BUILD_JOBS" -le 2 ] || BUILD_JOBS=2
+          echo "Compile with $BUILD_JOBS job(s); $(nproc) CPU(s) available"
+
           set +e
-          make -j$(nproc) 2>&1 | tee ../compile-parallel.log
+          make -j"$BUILD_JOBS" 2>&1 | tee ../compile-parallel.log
           BUILD_STATUS=${PIPESTATUS[0]}
           if [ "$BUILD_STATUS" -ne 0 ]; then
             make -j1 V=s 2>&1 | tee ../compile-verbose.log
